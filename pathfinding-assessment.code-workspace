@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"uri": "vscode-remote://codespaces+fictional-trout-jjjx5g5wqpv525v76/workspaces/pathfinding-assessment"
+		}
+	],
+	"remoteAuthority": "codespaces+fictional-trout-jjjx5g5wqpv525v76",
+	"settings": {
+		"python-envs.defaultEnvManager": "ms-python.python:system"
+	}
+}
