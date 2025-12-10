@@ -5,14 +5,14 @@ def heuristic(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
-def get_neighbors(node, rows, cols):
+def get_neighbours(node, rows, cols):
     x, y = node
-    neighbors = []
+    neighbours = []
     for dx, dy in [(0,1), (1,0), (0,-1), (-1,0)]:
         nx, ny = x + dx, y + dy
         if 0 <= nx < rows and 0 <= ny < cols:
-            neighbors.append((nx, ny))
-    return neighbors
+            neighbours.append((nx, ny))
+    return neighbours
 
 
 def reconstruct_path(came_from, current):
@@ -36,16 +36,16 @@ def dijkstra_search(grid, start, goal):
         if current == goal:
             return reconstruct_path(came_from, current)
 
-        for neighbor in get_neighbors(current, rows, cols):
-            if grid[neighbor[0]][neighbor[1]] == 0: # impassable
+        for neighbour in get_neighbours(current, rows, cols):
+            if grid[neighbour[0]][neighbour[1]] == 0: # impassable
                 continue
 
-            tentative_g = g_score[current] + grid[neighbor[0]][neighbor[1]]
+            tentative_g = g_score[current] + grid[neighbour[0]][neighbour[1]]
 
-            if neighbor not in g_score or tentative_g < g_score[neighbor]:
-                came_from[neighbor] = current
-                g_score[neighbor] = tentative_g
-                heapq.heappush(open_set, (tentative_g, neighbor))
+            if neighbour not in g_score or tentative_g < g_score[neighbour]:
+                came_from[neighbour] = current
+                g_score[neighbour] = tentative_g
+                heapq.heappush(open_set, (tentative_g, neighbour))
 
     return None
 
@@ -73,23 +73,23 @@ def a_star_search(grid, start, goal):
         open_set.discard(current)
         closed_set.add(current)
 
-        for neighbor in get_neighbors(current, rows, cols):
+        for neighbour in get_neighbours(current, rows, cols):
             # impassable terrain
-            if grid[neighbor[0]][neighbor[1]] == 0:
+            if grid[neighbour[0]][neighbour[1]] == 0:
                 continue
 
-            if neighbor in closed_set:
+            if neighbour in closed_set:
                 continue
             
-            tentative_g = g_score[current] + grid[neighbor[0]][neighbor[1]]
+            tentative_g = g_score[current] + grid[neighbour[0]][neighbour[1]]
 
-            if neighbor not in g_score or tentative_g < g_score[neighbor]:
-                came_from[neighbor] = current
-                g_score[neighbor] = tentative_g
-                f_score[neighbor] = tentative_g + heuristic(neighbor, goal)
-                if neighbor not in open_set:
-                    heapq.heappush(open_heap, (f_score[neighbor], neighbor))
-                    open_set.add(neighbor)
+            if neighbour not in g_score or tentative_g < g_score[neighbour]:
+                came_from[neighbour] = current
+                g_score[neighbour] = tentative_g
+                f_score[neighbour] = tentative_g + heuristic(neighbour, goal)
+                if neighbour not in open_set:
+                    heapq.heappush(open_heap, (f_score[neighbour], neighbour))
+                    open_set.add(neighbour)
 
     return None # no path found
 
